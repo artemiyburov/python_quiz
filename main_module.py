@@ -13,7 +13,7 @@ class QuizRangliste:
         self._data = ''
         self._file = datei
         _regex = re.compile(r"\w+,[0-9]+,[0-9]+\.[0-9]+")
-        with open(datei, 'r') as f:
+        with open(datei, 'a+') as f:
             for line in f:
                 if _regex.match(line):
                     self._data += line
