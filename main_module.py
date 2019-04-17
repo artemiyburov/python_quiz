@@ -13,7 +13,8 @@ class QuizRangliste:
         self._data = ''
         self._file = datei
         _regex = re.compile(r"\w+,[0-9]+,[0-9]+\.[0-9]+")
-        with open(datei, 'a+') as f:
+        open(datei, 'a').close()
+        with open(datei, 'r+') as f:
             for line in f:
                 if _regex.match(line):
                     self._data += line
@@ -46,25 +47,28 @@ class QuizRangliste:
         """
         Gibt intern gespeicherte Dateien als String wieder zurueck
         """
-        _str_ = ''
-        _list_ = []
-        _length_list_ = []
-        for line in iter(self._data.splitlines()):
-            _ = line.partition(',')
-            _1 = _[2].partition(',')
-            _list_ += [(_[0], int(_1[0]), float(_1[2]))]
-        _list_ = sorted(_list_, key=lambda x: (-x[1], x[2], x[0]))
-        for name in _list_:
-            _length_list_ += [(len(str(name[0])), len(str(name[1])),
-                               len(str(name[2])))]
-        _max0 = max(_length_list_, key=lambda x: x[0])[0]
-        _max1 = max(_length_list_, key=lambda x: x[1])[1]
-        _max2 = max(_length_list_, key=lambda x: x[2])[2]
-        for name in _list_:
-            _str_ += name[0].ljust(_max0+1) + "|" + \
-                     str(name[1]).rjust(_max1+1) + " |" + \
-                     str(name[2]).rjust(_max2+1) + "\n"
-        return _str_
+        if self._data:
+            _str_ = ''
+            _list_ = []
+            _length_list_ = []
+            for line in iter(self._data.splitlines()):
+                _ = line.partition(',')
+                _1 = _[2].partition(',')
+                _list_ += [(_[0], int(_1[0]), float(_1[2]))]
+            _list_ = sorted(_list_, key=lambda x: (-x[1], x[2], x[0]))
+            for name in _list_:
+                _length_list_ += [(len(str(name[0])), len(str(name[1])),
+                                   len(str(name[2])))]
+            _max0 = max(_length_list_, key=lambda x: x[0])[0]
+            _max1 = max(_length_list_, key=lambda x: x[1])[1]
+            _max2 = max(_length_list_, key=lambda x: x[2])[2]
+            for name in _list_:
+                _str_ += name[0].ljust(_max0+1) + "|" + \
+                         str(name[1]).rjust(_max1+1) + " |" + \
+                         str(name[2]).rjust(_max2+1) + "\n"
+            return _str_
+        else:
+            return ''
 
     def resultat_addieren(self, name, punkte, zeit):
         """

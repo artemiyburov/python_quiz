@@ -1,7 +1,0 @@
-Vika,34,82.0
-Artem,8,60.5
-Melke,15,70.8
-Johannes,5,15.2
-Salomon,8,57.0
-Dimitry,8,57.0
-Olga,10,11.0
